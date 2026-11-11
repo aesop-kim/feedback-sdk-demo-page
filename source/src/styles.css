@@ -2,16 +2,23 @@ html, body, #root { height: 100%; overflow: hidden; }
 .demoApp { position: fixed; inset: 0; display: flex; overflow: hidden; }
 
 .demoLnb { width: 240px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; background: var(--gray-1, #fcfcfd); border-right: 1px solid var(--gray-a4, #e8e8ec); padding: 12px; font-size: 14px; }
-.demoWorkspace { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 4px; color: var(--gray-12, #1c2024); }
-.demoWorkspaceLogo { width: 24px; height: 24px; border-radius: 6px; background: var(--accent-9, #3e63dd); color: #fff; font-weight: 700; font-size: 13px; display: grid; place-items: center; flex-shrink: 0; }
-.demoWorkspaceName { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.demoQuickAction { height: 32px; display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-a4, #e8e8ec); background: #fff; box-shadow: 1px 1px 3px 0 rgba(0, 0, 51, 0.04); color: var(--gray-11, #60646c); font: inherit; cursor: pointer; }
 .demoMenus { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .demoMenu { height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 8px; border-radius: 6px; color: var(--gray-11, #60646c); }
 .demoMenuSelected { background: var(--gray-a3, #f0f0f3); color: var(--gray-12, #1c2024); font-weight: 500; }
-.demoProfile { display: flex; align-items: center; gap: 8px; padding: 8px 4px 0; border-top: 1px solid var(--gray-a4, #e8e8ec); }
-.demoProfileText { min-width: 0; }
-.demoProfileName { font-weight: 500; color: var(--gray-12, #1c2024); }
-.demoProfileEmail { font-size: 12px; color: var(--gray-10, #80838d); overflow: hidden; text-overflow: ellipsis; }
 
 .demoContents { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; background: #fff; overflow: hidden; }
+
+.demoTrigger { width: 100%; }
+.demoWorkspace { width: 100%; height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 4px; border: 0; background: none; border-radius: 6px; font: inherit; color: var(--gray-12, #1c2024); cursor: pointer; }
+.demoWorkspace:hover { background: var(--gray-a2, #f9f9fb); }
+.demoWorkspaceLogo { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
+.demoWorkspaceName { flex: 1; text-align: left; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.demoWorkspace svg, .demoQuickAction > svg { color: var(--gray-8, #b9bbc6); flex-shrink: 0; }
+.demoQuickAction { width: 100%; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--gray-a4, #e8e8ec); background: #fff; box-shadow: 1px 1px 3px 0 rgba(0, 0, 51, 0.04); color: var(--gray-11, #60646c); font: inherit; cursor: pointer; }
+.demoQuickAction:hover { background: var(--gray-2, #f9f9fb); }
+.demoQuickActionContents { display: flex; align-items: center; gap: 8px; }
+.demoBusiness { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+.demoBusinessEmail { font-size: 12px; color: var(--gray-11, #60646c); }
+.demoBusinessRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.demoBusinessCompany { font-size: 14px; font-weight: 500; color: #000; }
+.demoBusinessProfile { font-size: 12px; color: var(--gray-9, #8b8d98); }
