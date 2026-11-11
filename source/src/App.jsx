@@ -73,7 +73,7 @@ export const App = () => {
             <div className="demoTrigger">
               <button type="button" className="demoWorkspace">
                 <img className="demoWorkspaceLogo" src="./logo-symbol.svg" alt="logo" />
-                <span className="demoWorkspaceName">래티스</span>
+                <span className="demoWorkspaceName">래티스 주식회사</span>
                 <Icon name="CaretDown" size={11} weight="fill" />
               </button>
             </div>
@@ -88,7 +88,7 @@ export const App = () => {
                 <div className="demoBusiness">
                   <span className="demoBusinessEmail">{user.email}</span>
                   <div className="demoBusinessRow">
-                    <span className="demoBusinessCompany">래티스</span>
+                    <span className="demoBusinessCompany">래티스 주식회사</span>
                     <Badge variant="soft" size="1" color="accent" radius="small" text="경영지원팀" />
                   </div>
                   <span className="demoBusinessProfile">{user.name}</span>
