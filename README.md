@@ -10,7 +10,7 @@ NEXT 15기 x Lattice 기업 과제에서 만든 피드백 채팅 SDK를 붙여 �
 2. 루트의 `index.html` 아래쪽 주석을 풀고, 스크립트 주소를 팀 SDK 주소로 바꿉니다.
 
 ```html
-<script src="https://팀이름.vercel.app/sdk.js"></script>
+<script src="배포한 SDK 스크립트 주소"></script>
 ```
 
 3. SDK 앱과 **다른 주소**에 배포합니다. Vercel에서 새 프로젝트를 만들어 포크한 레포를 연결하면 됩니다. 빌드 과정이 없는 정적 페이지라 설정은 기본값 그대로 두면 됩니다.
