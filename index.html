@@ -15,16 +15,7 @@
   <body>
     <div id="root"></div>
 
-    <!-- 주소 뒤의 ?sdk= 값으로 팀 SDK 스크립트를 불러옵니다. 예: ?sdk=https://팀이름.vercel.app/sdk.js -->
-    <script>
-      (function () {
-        var sdkUrl = new URLSearchParams(location.search).get('sdk');
-        if (!sdkUrl) return;
-        if (!/^https:\/\//.test(sdkUrl) && !/^http:\/\/localhost[:/]/.test(sdkUrl)) return;
-        var script = document.createElement('script');
-        script.src = sdkUrl;
-        document.body.appendChild(script);
-      })();
-    </script>
+    <!-- ▼ 여기에 팀 SDK 스크립트를 넣으세요. 바꿀 곳은 이 부분뿐입니다. -->
+    <!-- <script src="https://팀이름.vercel.app/sdk.js"></script> -->
   </body>
 </html>
