@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>데모 서비스</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <!-- 로그인한 사용자 정보. SDK에 사용자 정보를 넘길 때 이 값을 쓰세요. -->
+    <script>
+      window.DEMO_USER = { id: 'u_1024', name: '김데모', email: 'demo.user@example.com' };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- ▼ 여기에 팀 SDK 스크립트를 넣으세요. 바꿀 곳은 이 부분뿐입니다. -->
+    <!-- <script src="https://팀이름.vercel.app/sdk.js"></script> -->
+  </body>
+</html>

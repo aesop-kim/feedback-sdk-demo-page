@@ -1,0 +1,18 @@
+body { font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif; font-size: 14px; }
+.container { display: flex; width: 100vw; height: 100vh; overflow: hidden; }
+.logo { display: flex; align-items: center; gap: 8px; }
+.logoMark { width: 28px; height: 28px; border-radius: 6px; background: var(--semantic-accent-default, #355146); color: #fff; font-weight: 700; display: grid; place-items: center; }
+.logoName { font-weight: 600; white-space: nowrap; }
+.contents { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; }
+.body { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 24px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 12px; }
+.search { width: 260px; }
+.toolbarActions { display: flex; align-items: center; gap: 8px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #f0f0f3; vertical-align: middle; }
+.table th { font-weight: 600; background: #f9f9fb; border-bottom: 1px solid #e8e8ec; }
+.checkCell { width: 44px; }
+.idCell { color: #60646c; }
+.amountCell { text-align: right !important; }
+.empty { padding: 48px 0; text-align: center; color: #80838d; }
+.headerArea { padding: 16px 24px 0; }
