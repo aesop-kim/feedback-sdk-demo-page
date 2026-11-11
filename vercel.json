@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "mkdir -p dist && cp -R index.html logo-symbol.svg assets dist/ && sed -i 's#http://localhost:3000/sdk.js#https://lattice-feedback-sdk.vercel.app/sdk.js#' dist/index.html",
+  "outputDirectory": "dist"
+}
