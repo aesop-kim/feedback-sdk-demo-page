@@ -1,21 +1,22 @@
 import { useMemo, useState } from 'react';
 import Button from '@lattice-im/design-system/components/buttons/Button/Button';
 import Badge from '@lattice-im/design-system/components/data-display/Badge/Badge';
+import DataGrid from '@lattice-im/design-system/components/data-display/DataGrid/DataGrid';
+import DataGridFloatingActionBar from '@lattice-im/design-system/components/data-display/DataGrid/DataGridFloatingActionBar/DataGridFloatingActionBar';
 import Icon from '@lattice-im/design-system/components/data-display/Icon/Icon';
 import InitialAvatar from '@lattice-im/design-system/components/data-display/InitialAvatar/InitialAvatar';
-import CheckboxInput from '@lattice-im/design-system/components/inputs/CheckboxInput/CheckboxInput';
-import SearchInput from '@lattice-im/design-system/components/inputs/SearchInput/SearchInput';
-import SelectInput from '@lattice-im/design-system/components/inputs/SelectInput/SelectInput';
+import DataGridLayout from '@lattice-im/design-system/components/layouts/DataGridLayout/DataGridLayout';
+import DataGridSection from '@lattice-im/design-system/components/layouts/DataGridSection/DataGridSection';
 
 const CUSTOMERS = ['한빛상사', '세라트젠', '오름기획', '누리테크', '다온물산', '가람전자', '미르건설', '새솔유통'];
 const MENUS = [
-  { icon: 'SquaresFour', text: '대시보드' },
-  { icon: 'FileText', text: '계약서' },
-  { icon: 'Folder', text: '프로젝트' },
-  { icon: 'Users', text: '고객' },
-  { icon: 'Gear', text: '설정' },
+  { icon: 'House', text: '홈' },
+  { icon: 'FileText', text: '전체 계약서' },
+  { icon: 'FolderSimple', text: '프로젝트' },
+  { icon: 'UsersThree', text: '고객' },
+  { icon: 'PenNib', text: '전자서명' },
 ];
-const PAGE_SIZE_OPTIONS = [5, 10, 100].map((size) => ({ size, label: `${size}개 보기` }));
+const BROKEN_LIMIT = 100;
 
 const createContracts = () =>
   Array.from({ length: 23 }, (_, index) => ({
@@ -26,17 +27,37 @@ const createContracts = () =>
     isConcluded: index % 3 === 0,
   }));
 
+const COLUMNS = [
+  { name: '문서 ID', field: 'id', width: 130 },
+  { name: '계약서명', field: 'title', flex: 2, minWidth: 240 },
+  { name: '고객', field: 'customer', width: 160 },
+  { name: '계약 금액', field: 'amount', width: 160, formatter: (value) => `${Number(value).toLocaleString('ko')}원` },
+  {
+    name: '체결 여부',
+    colId: 'isConcluded',
+    width: 130,
+    cellRenderer: (contract) => (
+      <Badge
+        variant="soft"
+        size="1"
+        color={contract.isConcluded ? 'success' : 'default'}
+        text={contract.isConcluded ? '체결완료' : '미체결'}
+      />
+    ),
+  },
+];
+
 export const App = () => {
   const user = window.DEMO_USER;
   const [contracts, setContracts] = useState(createContracts);
-  const [keyword, setKeyword] = useState('');
-  const [pageSizeOption, setPageSizeOption] = useState(PAGE_SIZE_OPTIONS[0]);
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const visibleContracts = useMemo(() => {
-    const filtered = contracts.filter((contract) => contract.title.startsWith(keyword.trim()));
-    return pageSizeOption.size === 100 ? [] : filtered.slice(0, pageSizeOption.size);
-  }, [contracts, keyword, pageSizeOption]);
+  const pageItems = useMemo(
+    () => (limit === BROKEN_LIMIT ? [] : contracts.slice((page - 1) * limit, page * limit)),
+    [contracts, page, limit],
+  );
 
   const handleAdd = () => {
     const customer = CUSTOMERS[contracts.length % CUSTOMERS.length];
@@ -44,103 +65,70 @@ export const App = () => {
       { id: `DOC-${2001 + contracts.length}`, title: `${customer} 신규 계약서`, customer, amount: 2500000, isConcluded: false },
       ...contracts,
     ]);
-  };
-
-  const handleToggle = (id) => {
-    setSelectedIds(selectedIds.includes(id) ? selectedIds.filter((selectedId) => selectedId !== id) : [...selectedIds, id]);
+    setPage(1);
   };
 
   const handleDelete = () => {
+    const selectedIds = selectedItems.map((item) => item.id);
     setContracts(contracts.filter((contract) => !selectedIds.includes(contract.id)));
-    setSelectedIds([]);
+    setSelectedItems([]);
   };
 
   return (
     <div className="demoApp">
-      <nav className="lnb">
-        <div className="workspace">
-          <span className="workspaceLogo">D</span>
-          <span className="workspaceName">데모 주식회사</span>
+      <nav className="demoLnb">
+        <div className="demoWorkspace">
+          <span className="demoWorkspaceLogo">D</span>
+          <span className="demoWorkspaceName">데모 주식회사</span>
+          <Icon name="CaretUpDown" size={14} />
         </div>
-        <ul className="menus">
+        <button className="demoQuickAction" onClick={handleAdd}>
+          <Icon name="Plus" size={16} />
+          새로 만들기
+        </button>
+        <ul className="demoMenus">
           {MENUS.map((menu) => (
-            <li key={menu.text} className={menu.text === '계약서' ? 'menu selected' : 'menu'}>
+            <li key={menu.text} className={menu.text === '전체 계약서' ? 'demoMenu demoMenuSelected' : 'demoMenu'}>
               <Icon name={menu.icon} size={18} />
               {menu.text}
             </li>
           ))}
         </ul>
-        <div className="profile">
+        <div className="demoProfile">
           <InitialAvatar name={user.name} size="2" />
-          <div>
-            <div className="profileName">{user.name}</div>
-            <div className="profileEmail">{user.email}</div>
+          <div className="demoProfileText">
+            <div className="demoProfileName">{user.name}</div>
+            <div className="demoProfileEmail">{user.email}</div>
           </div>
         </div>
       </nav>
 
-      <main className="contents">
-        <header className="header">
-          <h1 className="title">계약서</h1>
-          <div className="headerActions">
-            <div className="search">
-              <SearchInput submittedValue={keyword} submit={setKeyword} placeholder="계약서명 검색" />
-            </div>
-            <Button text="새로 만들기" size="2" icon={{ name: 'Plus', position: 'start' }} onClick={handleAdd} />
-          </div>
-        </header>
-
-        <div className="body">
-          <div className="toolbar">
-            <span className="count">전체 {contracts.length}건</span>
-            <div className="toolbarActions">
-              <Button text="선택 삭제" size="2" variant="outline" disabled={!selectedIds.length} onClick={handleDelete} />
-              <div className="pageSize">
-                <SelectInput
-                  itemList={PAGE_SIZE_OPTIONS}
-                  displayKey="label"
-                  displayValue={pageSizeOption.label}
-                  selectItem={setPageSizeOption}
-                />
-              </div>
-            </div>
-          </div>
-
-          <table className="table">
-            <thead>
-              <tr>
-                <th className="checkCell" />
-                <th>문서 ID</th>
-                <th>계약서명</th>
-                <th>고객</th>
-                <th className="amountCell">계약 금액</th>
-                <th>체결 여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleContracts.map((contract) => (
-                <tr key={contract.id}>
-                  <td className="checkCell">
-                    <CheckboxInput checked={selectedIds.includes(contract.id)} onToggle={() => handleToggle(contract.id)} hasNoPadding />
-                  </td>
-                  <td className="idCell">{contract.id}</td>
-                  <td>{contract.title}</td>
-                  <td>{contract.customer}</td>
-                  <td className="amountCell">{contract.amount.toLocaleString()}원</td>
-                  <td>
-                    <Badge
-                      variant="soft"
-                      size="1"
-                      color={contract.isConcluded ? 'success' : 'default'}
-                      text={contract.isConcluded ? '체결완료' : '미체결'}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {!visibleContracts.length && <p className="empty">표시할 계약서가 없습니다.</p>}
-        </div>
+      <main className="demoContents">
+        <DataGridSection
+          title="전체 계약서"
+          total={contracts.length}
+          pagination={{ page, setPage, limit, setLimit }}
+          fixedLeftItems={[<Button key="create" size="2" text="계약서 등록" icon={{ name: 'Plus', position: 'start' }} onClick={handleAdd} />]}
+          rightItems={[<Button key="excel" size="2" variant="outline" text="엑셀 다운로드" />]}
+        >
+          <DataGridLayout
+            grid={
+              <DataGrid
+                items={pageItems}
+                columns={COLUMNS}
+                rowSelection={{ selectedItems, setSelectedItems }}
+                emptyMessage="표시할 계약서가 없습니다."
+              />
+            }
+            floatingActionBar={
+              <DataGridFloatingActionBar
+                count={selectedItems.length}
+                buttons={[{ text: '삭제', isRed: true, onClick: handleDelete }]}
+                onClose={() => setSelectedItems([])}
+              />
+            }
+          />
+        </DataGridSection>
       </main>
     </div>
   );
