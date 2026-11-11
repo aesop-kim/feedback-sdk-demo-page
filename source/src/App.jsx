@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Button from '@lattice-im/design-system/components/buttons/Button/Button';
 import Badge from '@lattice-im/design-system/components/data-display/Badge/Badge';
 import DataGrid from '@lattice-im/design-system/components/data-display/DataGrid/DataGrid';
@@ -16,10 +16,9 @@ const MENUS = [
   { icon: 'UsersThree', text: '고객' },
   { icon: 'PenNib', text: '전자서명' },
 ];
-const BROKEN_LIMIT = 100;
 
 const createContracts = () =>
-  Array.from({ length: 23 }, (_, index) => ({
+  Array.from({ length: 60 }, (_, index) => ({
     id: `DOC-${1001 + index}`,
     title: `${CUSTOMERS[index % CUSTOMERS.length]} 서비스 이용 계약서`,
     customer: CUSTOMERS[index % CUSTOMERS.length],
@@ -50,14 +49,7 @@ const COLUMNS = [
 export const App = () => {
   const user = window.DEMO_USER;
   const [contracts, setContracts] = useState(createContracts);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
   const [selectedItems, setSelectedItems] = useState([]);
-
-  const pageItems = useMemo(
-    () => (limit === BROKEN_LIMIT ? [] : contracts.slice((page - 1) * limit, page * limit)),
-    [contracts, page, limit],
-  );
 
   const handleAdd = () => {
     const customer = CUSTOMERS[contracts.length % CUSTOMERS.length];
@@ -65,7 +57,6 @@ export const App = () => {
       { id: `DOC-${2001 + contracts.length}`, title: `${customer} 신규 계약서`, customer, amount: 2500000, isConcluded: false },
       ...contracts,
     ]);
-    setPage(1);
   };
 
   const handleDelete = () => {
@@ -143,14 +134,13 @@ export const App = () => {
         <DataGridSection
           title="전체 계약서"
           total={contracts.length}
-          pagination={{ page, setPage, limit, setLimit }}
           fixedLeftItems={[<Button key="create" size="2" text="계약서 등록" icon={{ name: 'Plus', position: 'start' }} onClick={handleAdd} />]}
           rightItems={[<Button key="excel" size="2" variant="outline" text="엑셀 다운로드" />]}
         >
           <DataGridLayout
             grid={
               <DataGrid
-                items={pageItems}
+                items={contracts}
                 columns={COLUMNS}
                 rowSelection={{ selectedItems, setSelectedItems }}
                 emptyMessage="표시할 계약서가 없습니다."
